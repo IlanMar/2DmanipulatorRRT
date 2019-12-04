@@ -453,10 +453,10 @@ namespace ManipulatorRRT
                         Crand.q3 = T[nPoint].V.q3 + 4 - (float)rand.NextDouble() * 8;            // + (5 - 2 * rand3.Next(0, 5) - 5); //rand2.Next(0, 360); //угл относительно предидущего звена//rand2
 
                         Crand.q4 = T[nPoint].V.q4 - 4 + (float)rand.NextDouble() * 8;             // + (5 - 2 * rand4.Next(0, 5) - 5);// rand3.Next(0, 360); //угл относительно предидущего звена//rand3
-                   Crand.qP =  T[nPoint].V.qP - 10 +(float)rand.NextDouble() * 20;
+                   Crand.qP =  T[nPoint].V.qP - 10 +(float)rand.NextDouble() * 20;//закоментировать для зафиксирования основания
 
 
-                    }
+                }
                 if (step % 2 != 0)
                 {
 
@@ -468,7 +468,7 @@ namespace ManipulatorRRT
                     Crand.q3 = T[rrr].V.q3 - 4 + (float)rand.NextDouble() * 8;            // + (5 - 2 * rand3.Next(0, 5) - 5); //rand2.Next(0, 360); //угл относительно предидущего звена//rand2
 
                     Crand.q4 = T[rrr].V.q4 + 4 - (float)rand.NextDouble() * 8;             // + (5 - 2 * rand4.Next(0, 5) - 5);// rand3.Next(0, 360); //угл относительно предидущего звена//rand3
-                   Crand.qP =  T[rrr].V.qP + 10 - (float)rand.NextDouble() * 20;
+                   Crand.qP =  T[rrr].V.qP + 10 - (float)rand.NextDouble() * 20;//закоментировать для зафиксирования основания
 
 
                 }

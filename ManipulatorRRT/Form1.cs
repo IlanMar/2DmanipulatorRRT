@@ -116,8 +116,9 @@ namespace ManipulatorRRT
                 paintTree();// заного отрисовываем дерево
                 paintPath();
                 var D = 10;//радиус кружка звеньев
+            var D2 = 35;//кружок основания
                 Pen blackPen = new Pen(Color.Blue, 2);
-                g.FillEllipse(Brushes.Blue, (pictureBox1.Width - pictureBox1.Width / 2 - D / 2) + tempConf.qP, pictureBox1.Height - D / 2, D, D); //рисуем кружок снования
+                g.FillEllipse(Brushes.Blue, (pictureBox1.Width - pictureBox1.Width / 2 - D2 / 2) + tempConf.qP, pictureBox1.Height - D2 / 2, D2, D2); //рисуем кружок снования
                 g.FillEllipse(Brushes.Blue, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob - D / 2, pictureBox1.Height - tempConf.Yglob - D / 2, D, D); //рисуем кружок нулевого звена
                 g.FillEllipse(Brushes.Green, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob2 - D / 2, pictureBox1.Height - tempConf.Yglob2 - D / 2, D, D); //рисуем кружок нулевого звена
 

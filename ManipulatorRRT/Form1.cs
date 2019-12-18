@@ -119,19 +119,19 @@ namespace ManipulatorRRT
             var D2 = 15;//кружок основания
             var D3 = 15;//радиус колес
                 Pen blackPen = new Pen(Color.Blue, 2);
-            Pen blackPen2 = new Pen(Color.Black, 5);
-                g.FillRectangle(Brushes.Black, (pictureBox1.Width - pictureBox1.Width / 2 - D2 / 2) + tempConf.qP, pictureBox1.Height - D2 / 2 - 20, D2, D2); //рисуем квадрат  основания
+            Pen blackPen2 = new Pen(Color.Black, 6);
+                g.FillRectangle(Brushes.Black, (pictureBox1.Width - pictureBox1.Width / 2 - D2 / 2) + tempConf.qP, pictureBox1.Height - D2 / 2 - 19, D2, D2); //рисуем квадрат  основания
 
 
                 g.FillEllipse(Brushes.Black, (pictureBox1.Width - pictureBox1.Width / 2 - D3 / 2) + tempConf.qP-30, pictureBox1.Height-D3, D3, D3); //рисуем колесо платформы
                 g.FillEllipse(Brushes.Black, (pictureBox1.Width - pictureBox1.Width / 2 - D3 / 2) + tempConf.qP + 30, pictureBox1.Height - D3, D3, D3); //рисуем колесо платформы
-                g.DrawLine(blackPen2, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.qP-35, pictureBox1.Height - D3+5, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.qP+35, pictureBox1.Height - D3+5);// рисуем платформу
+                g.DrawLine(blackPen2, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.qP-35, pictureBox1.Height - D3+2, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.qP+35, pictureBox1.Height - D3+2);// рисуем платформу
 
                 g.FillEllipse(Brushes.Blue, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob - D / 2, pictureBox1.Height - tempConf.Yglob - D / 2, D, D); //рисуем кружок  звена
                 g.FillEllipse(Brushes.Green, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob2 - D / 2, pictureBox1.Height - tempConf.Yglob2 - D / 2, D, D); //рисуем кружок  звена
 
 
-                g.DrawLine(blackPen, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.qP, pictureBox1.Height-15, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob, pictureBox1.Height - tempConf.Yglob);// "-15" это чтобы поднять основу манипулятора на 15 пикселей, по факту она от земли //по идее нужно переделать, чтобы манипулятор был на 15 пикселей выше
+                g.DrawLine(blackPen, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.qP, pictureBox1.Height-18, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob, pictureBox1.Height - tempConf.Yglob);// "-15" это чтобы поднять основу манипулятора на 15 пикселей, по факту она от земли //по идее нужно переделать, чтобы манипулятор был на 15 пикселей выше
                 g.DrawLine(blackPen, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob, pictureBox1.Height - tempConf.Yglob, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob2, pictureBox1.Height - tempConf.Yglob2);
 
                 g.FillEllipse(Brushes.Blue, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob3 - D / 2, pictureBox1.Height - tempConf.Yglob3 - D / 2, D, D); //рисуем кружок  звена

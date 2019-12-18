@@ -116,18 +116,26 @@ namespace ManipulatorRRT
                 paintTree();// заного отрисовываем дерево
                 paintPath();
                 var D = 10;//радиус кружка звеньев
-            var D2 = 35;//кружок основания
+            var D2 = 15;//кружок основания
+            var D3 = 15;//радиус колес
                 Pen blackPen = new Pen(Color.Blue, 2);
-                g.FillEllipse(Brushes.Blue, (pictureBox1.Width - pictureBox1.Width / 2 - D2 / 2) + tempConf.qP, pictureBox1.Height - D2 / 2, D2, D2); //рисуем кружок снования
-                g.FillEllipse(Brushes.Blue, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob - D / 2, pictureBox1.Height - tempConf.Yglob - D / 2, D, D); //рисуем кружок нулевого звена
-                g.FillEllipse(Brushes.Green, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob2 - D / 2, pictureBox1.Height - tempConf.Yglob2 - D / 2, D, D); //рисуем кружок нулевого звена
+            Pen blackPen2 = new Pen(Color.Black, 5);
+                g.FillRectangle(Brushes.Black, (pictureBox1.Width - pictureBox1.Width / 2 - D2 / 2) + tempConf.qP, pictureBox1.Height - D2 / 2 - 20, D2, D2); //рисуем квадрат  основания
 
 
-                g.DrawLine(blackPen, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.qP, pictureBox1.Height, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob, pictureBox1.Height - tempConf.Yglob);
+                g.FillEllipse(Brushes.Black, (pictureBox1.Width - pictureBox1.Width / 2 - D3 / 2) + tempConf.qP-30, pictureBox1.Height-D3, D3, D3); //рисуем колесо платформы
+                g.FillEllipse(Brushes.Black, (pictureBox1.Width - pictureBox1.Width / 2 - D3 / 2) + tempConf.qP + 30, pictureBox1.Height - D3, D3, D3); //рисуем колесо платформы
+                g.DrawLine(blackPen2, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.qP-35, pictureBox1.Height - D3+5, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.qP+35, pictureBox1.Height - D3+5);// рисуем платформу
+
+                g.FillEllipse(Brushes.Blue, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob - D / 2, pictureBox1.Height - tempConf.Yglob - D / 2, D, D); //рисуем кружок  звена
+                g.FillEllipse(Brushes.Green, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob2 - D / 2, pictureBox1.Height - tempConf.Yglob2 - D / 2, D, D); //рисуем кружок  звена
+
+
+                g.DrawLine(blackPen, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.qP, pictureBox1.Height-15, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob, pictureBox1.Height - tempConf.Yglob);// "-15" это чтобы поднять основу манипулятора на 15 пикселей, по факту она от земли //по идее нужно переделать, чтобы манипулятор был на 15 пикселей выше
                 g.DrawLine(blackPen, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob, pictureBox1.Height - tempConf.Yglob, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob2, pictureBox1.Height - tempConf.Yglob2);
 
-                g.FillEllipse(Brushes.Blue, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob3 - D / 2, pictureBox1.Height - tempConf.Yglob3 - D / 2, D, D); //рисуем кружок нулевого звена
-                g.FillEllipse(Brushes.Green, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob4 - D / 2, pictureBox1.Height - tempConf.Yglob4 - D / 2, D, D); //рисуем кружок нулевого звена
+                g.FillEllipse(Brushes.Blue, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob3 - D / 2, pictureBox1.Height - tempConf.Yglob3 - D / 2, D, D); //рисуем кружок  звена
+                g.FillEllipse(Brushes.Green, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob4 - D / 2, pictureBox1.Height - tempConf.Yglob4 - D / 2, D, D); //рисуем кружок  звена
            // var temp3=
                 g.DrawLine(blackPen, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob2, pictureBox1.Height - tempConf.Yglob2, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob3, pictureBox1.Height - tempConf.Yglob3);
 
@@ -150,7 +158,9 @@ namespace ManipulatorRRT
             for (int i = 1; i < Rrt.backPathTT.Count; i++)
             {
                 g.FillEllipse(Brushes.Blue, pictureBox1.Width - pictureBox1.Width / 2 +Rrt.backPathTT[i].V.Xglob - D / 2, pictureBox1.Height - Rrt.backPathTT[i].V.Yglob - D / 2, D, D); //рисуем кружок нулевого звена
-                g.FillEllipse(Brushes.Green, pictureBox1.Width - pictureBox1.Width / 2 + Rrt.backPathTT[i].V.Xglob2 - D / 2, pictureBox1.Height - Rrt.backPathTT[i].V.Yglob2 - D / 2, D, D); //рисуем кружок нулевого звена
+                //g.FillEllipse(Brushes.Blue, pictureBox1.Width - pictureBox1.Width / 2 + Rrt.backPathTT[i].V.Xglob - D / 2, pictureBox1.Height - Rrt.backPathTT[i].V.Yglob - D / 2, D, D);
+
+                g.FillEllipse(Brushes.Green, pictureBox1.Width - pictureBox1.Width / 2 + Rrt.backPathTT[i].V.Xglob2 - D / 2, pictureBox1.Height - Rrt.backPathTT[i].V.Yglob2 - D / 2, D, D); //рисуем кружок  звена
 
                 
                 g.DrawLine(blackPen, pictureBox1.Width - pictureBox1.Width / 2, pictureBox1.Height, pictureBox1.Width - pictureBox1.Width / 2 + Rrt.backPathTT[i].V.Xglob, pictureBox1.Height - Rrt.backPathTT[i].V.Yglob);

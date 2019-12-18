@@ -117,7 +117,7 @@ namespace ManipulatorRRT
                 paintPath();
                 var D = 10;//радиус кружка звеньев
             var D2 = 15;//кружок основания
-            var D3 = 15;//радиус колес
+            var D3 = 20;//радиус колес
                 Pen blackPen = new Pen(Color.Blue, 2);
             Pen blackPen2 = new Pen(Color.Black, 6);
                 g.FillRectangle(Brushes.Black, (pictureBox1.Width - pictureBox1.Width / 2 - D2 / 2) + tempConf.qP, pictureBox1.Height - D2 / 2 - 19, D2, D2); //рисуем квадрат  основания

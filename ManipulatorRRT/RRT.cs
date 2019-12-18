@@ -441,21 +441,21 @@ namespace ManipulatorRRT
             int Yright = 2000;
                 while (generateKey)
                 {
-                    if (step % 2 == 0)
-                       {
+                if (step % 2 == 0)
+                {
 
-                            Crand.q = T[nPoint].V.q + 4 - (float)rand.NextDouble() * 8;  //(5-2*rand.NextDouble(0, 5)-5);// rand.Next(0, 180); //угл относительно предыдущего звена
+                    Crand.q = T[nPoint].V.q + 4 - (float)rand.NextDouble() * 8;  //(5-2*rand.NextDouble(0, 5)-5);// rand.Next(0, 180); //угл относительно предыдущего звена
 
-                            Crand.q2 = T[nPoint].V.q2 - 4 + (float)rand.NextDouble() * 8;            //+ (5 - 2 * rand2.Next(0, 5) - 5);//rand.Next(0, 360); //угл относительно предидущего звена
+                    Crand.q2 = T[nPoint].V.q2 - 4 + (float)rand.NextDouble() * 8;            //+ (5 - 2 * rand2.Next(0, 5) - 5);//rand.Next(0, 360); //угл относительно предидущего звена
 
-                            Crand.q3 = T[nPoint].V.q3 + 4 - (float)rand.NextDouble() * 8;            // + (5 - 2 * rand3.Next(0, 5) - 5); //rand2.Next(0, 360); //угл относительно предидущего звена//rand2
+                    Crand.q3 = T[nPoint].V.q3 + 4 - (float)rand.NextDouble() * 8;            // + (5 - 2 * rand3.Next(0, 5) - 5); //rand2.Next(0, 360); //угл относительно предидущего звена//rand2
 
-                            Crand.q4 = T[nPoint].V.q4 - 4 + (float)rand.NextDouble() * 8;             // + (5 - 2 * rand4.Next(0, 5) - 5);// rand3.Next(0, 360); //угл относительно предидущего звена//rand3
-                       Crand.qP =  T[nPoint].V.qP - 10 +(float)rand.NextDouble() * 20;//закоментировать для зафиксирования основания
+                    Crand.q4 = T[nPoint].V.q4 - 4 + (float)rand.NextDouble() * 8;             // + (5 - 2 * rand4.Next(0, 5) - 5);// rand3.Next(0, 360); //угл относительно предидущего звена//rand3
+                    Crand.qP = T[nPoint].V.qP - 10 + (float)rand.NextDouble() * 20;//закоментировать для зафиксирования основания
 
 
-                    }
-                    if (step % 2 != 0)
+                }
+                if (step % 2 != 0)
                 {
 
                     int rrr = rand.Next(0, T.Count - 1);

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace ManipulatorRRT
 {
@@ -34,19 +35,30 @@ namespace ManipulatorRRT
         bool k = false;
         private void button1_Click(object sender, EventArgs e)
         {
+
+            System.Diagnostics.Stopwatch sw = new Stopwatch();//время работы ррт
+            sw.Start();
+            //MessageBox.Show("");
+            
+
+
             Cgoal.X = float.Parse(textBox2.Text, CultureInfo.InvariantCulture.NumberFormat);
             Cgoal.Y = float.Parse(textBox3.Text, CultureInfo.InvariantCulture.NumberFormat);
             int edgeMaxLenght =int.Parse(textBox4.Text, CultureInfo.InvariantCulture.NumberFormat);
             Nsteps = int.Parse(textBox5.Text, CultureInfo.InvariantCulture.NumberFormat);
             //RRT Rrt = new RRT();
-             k = Rrt.RRTStart(Cinit, Cgoal, Nsteps, Nextend, edgeMaxLenght,Obs.ObsList);
-            textBox1.Text = Rrt.success.ToString();
-            
+            int qincrement= int.Parse(textBox6.Text, CultureInfo.InvariantCulture.NumberFormat);
+            k = Rrt.RRTStart(Cinit, Cgoal, Nsteps, Nextend, edgeMaxLenght,Obs.ObsList,qincrement);
+            textBox1.Text = Rrt.success.ToString();            
             //Rrt.setT();
             paintTree();
-            updateRobotPose(Rrt.T[0]);         
-            
+            updateRobotPose(Rrt.T[0]);                     
             textBox1.Invalidate();
+            sw.Stop();
+
+
+            //MessageBox.Show((sw.ElapsedMilliseconds / 100.0).ToString());//выволим время работы ррт
+            textBox7.Text = (sw.ElapsedMilliseconds / 100.0).ToString();
 
             //paintRobot();
         }
@@ -251,6 +263,11 @@ namespace ManipulatorRRT
             i = 1;
             g.Clear(Color.White);            
             pictureBox1.Invalidate();
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

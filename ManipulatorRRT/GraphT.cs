@@ -23,8 +23,8 @@ namespace ManipulatorRRT
 
         public float Xglob, Xglob2, Xglob3, Xglob4, XglobPlat;
         public float Yglob, Yglob2, Yglob3, Yglob4, YglobPlat;
-        
-      
+
+        public float distanceToParent;
 
 
     }

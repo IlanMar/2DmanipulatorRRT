@@ -23,19 +23,22 @@ namespace ManipulatorRRT
         Random rand3 = new Random();
         Random rand4 = new Random();
         Random vrand = new Random();
+
+         
+
+    
+
         public bool RRTStart(PointF Cinit, PointF Cgoal, int Nsteps, int Nextend, int edgeMaxLenght, List<PointF> obsList, int qincrement)// Edge P)// List<PointF> obsList
         {
-            
             // 1. Шаг T(V.E)={Cinit, 0}
-            GraphT GT = new GraphT();// объект вершина            
-        
+            GraphT GT = new GraphT();// объект вершина   
             // 2. Шаг step =0
             int step = 0;
-            ManipulatorConf Ct = GenerateNewStare2(step);   // 728387  //генерируем начальное положение манипулятора (пока что заданно жестко)
+            ManipulatorConf Ct = GenerateNewStare2(72087);   //step,  728387  //генерируем начальное положение манипулятора (пока что заданно жестко)
             GT.V = Ct;
             T.Add(GT);//список вершин
-            //3. Шаг success = false
-           
+                      //3. Шаг success = false
+
             // 4. Шаг Начало цикла
             while ((step < Nsteps) && (success == false))
             {
@@ -49,7 +52,8 @@ namespace ManipulatorRRT
                 // 9. Шаг
                 float dist = distanceToNeighbor(Crand, T);
 
-                if (8< dist && dist < edgeMaxLenght && g)// максимальная длина веток
+
+                if (8< dist && dist < edgeMaxLenght && g && Crand.distanceToParent< edgeMaxLenght)// максимальная длина веток
                 {
                     ManipulatorConf Cnear = NearestNeighbor(Crand, T);
                     ManipulatorConf Cnew = FindStoppingState(Cnear, Crand);//пока вернем Crand
@@ -89,19 +93,24 @@ namespace ManipulatorRRT
         ManipulatorConf NearestNeighbor(ManipulatorConf Crand, List<GraphT>  T)// 
         {
                 if (T.Count == 0) { return Crand; }
-                double temp = 9999;
+                float temp = 99999;
                 int tempI = 0;
                 for (int i = 0; i < T.Count - 1; i++)
                 {
                     //var y = Math.Pow((Math.Pow(Mr.manipulatorLinks[i].Xglob4 - q1.Xglob4, stepen) + Math.Pow(Mr.manipulatorLinks[i].Yglob4 - q1.Yglob4, stepen)), 1 / 2);
                     var a = (T[i].V.Xglob4 - Crand.Xglob4);
                     var b = (T[i].V.Yglob4 - Crand.Yglob4);
-                    var c = 0.5;
-                    var y = Math.Pow((a * a + b * b), 0.5);
-                    if (y < temp && genCoord(Crand, T[i].V)) 
+                   // var c = 0.5;
+
+                    float  c = a * a + b * b;
+
+                float answer= (float)Math.Sqrt(c);
+
+               // var y = Math.Pow((a * a + b * b), 0.5);
+                    if (answer < temp && genCoord(Crand, T[i].V)) 
                     {
                         tempI = i;
-                        temp = y; 
+                        temp = answer; 
                     }
                 }
                 if (temp > 100) //если новая точка ближе чем 40 к любой из точек то тру
@@ -172,8 +181,10 @@ namespace ManipulatorRRT
                 //var y = Math.Pow((Math.Pow(Mr.manipulatorLinks[i].Xglob4 - q1.Xglob4, stepen) + Math.Pow(Mr.manipulatorLinks[i].Yglob4 - q1.Yglob4, stepen)), 1 / 2);
                 var a = (T[i].V.Xglob4 - Crand.Xglob4);
                 var b = (T[i].V.Yglob4 - Crand.Yglob4);
-                var c = 0.5;
-                var y = Math.Pow((a * a + b * b), 0.5);
+                //var c = 0.5;
+               // var y = Math.Pow((a * a + b * b), 0.5);
+                float c = a * a + b * b;  //теорема пифагора
+                float y = (float)Math.Sqrt(c);
 
                 //начинаем проверку чтобы угловые координаты не были слишком различны от точки к точке
                 float k = Math.Abs(T[i].V.q - Crand.q);
@@ -235,11 +246,11 @@ namespace ManipulatorRRT
             bool generateKey = true;
             while (generateKey)
             {
-                Crand.q = trand.Next(0, 180); //угл относительно предидущего звена
-                Crand.q2 = trand.Next(0, 360); //угл относительно предидущего звена
-                Crand.q3 = trand2.Next(0, 360); //угл относительно предидущего звена//rand2
-                Crand.q4 = trand3.Next(0, 360); //угл относительно предидущего звена//rand3
-                Crand.qP = 0;
+                Crand.q = 85;//trand.Next(0, 180); //угл относительно предидущего звена
+                Crand.q2 = 20;// trand.Next(0, 360); //угл относительно предидущего звена
+                Crand.q3 = -40;// trand2.Next(0, 360); //угл относительно предидущего звена//rand2
+                Crand.q4 = 40;//trand3.Next(0, 360); //угл относительно предидущего звена//rand3
+                Crand.qP = -80;
                 Crand.linklenght = 80;
                 Crand.linklenght2 = 100; //длина второго звена
                 Crand.linklenght3 = 100;
@@ -438,7 +449,8 @@ namespace ManipulatorRRT
             bool generateKey = true;
             int Yleft = -2000;
             int Yright = 2000;
-                while (generateKey)
+            int rrr = rand.Next(0, T.Count - 1);
+            while (generateKey)
                 {
                 if (step % 2 == 0)
                 {
@@ -457,7 +469,7 @@ namespace ManipulatorRRT
                 if (step % 2 != 0)
                 {
 
-                    int rrr = rand.Next(0, T.Count - 1);
+                    
                     Crand.q = T[rrr].V.q + qincrement - (float)rand.NextDouble() * (qincrement * 2);  //(5-2*rand.NextDouble(0, 5)-5);// rand.Next(0, 180); //угл относительно предидущего звена
 
                     Crand.q2 = T[rrr].V.q2 - qincrement + (float)rand.NextDouble() * (qincrement * 2);            //+ (5 - 2 * rand2.Next(0, 5) - 5);//rand.Next(0, 360); //угл относительно предидущего звена
@@ -505,6 +517,23 @@ namespace ManipulatorRRT
                     generateKey = false;
                 }
             }
+            float a1=0, b1=0;
+            if (step % 2 == 0)//вычисляем дистанцию до родительского звена
+            {
+                 a1 = (T[rrr].V.Xglob4 - Crand.Xglob4);
+                 b1 = (T[rrr].V.Yglob4 - Crand.Yglob4);
+            }
+            if (step % 2 == 0)
+            {
+                 a1 = (T[nPoint].V.Xglob4 - Crand.Xglob4);
+                 b1 = (T[nPoint].V.Yglob4 - Crand.Yglob4);
+            }
+
+                //var c = 0.5;
+                // var y = Math.Pow((a * a + b * b), 0.5);
+                float c = a1 * a1 + b1 * b1;  //теорема пифагора
+                float y1 = (float)Math.Sqrt(c);//вычисляем дистанцию до родительского звена
+            Crand.distanceToParent = y1;
 
             return Crand;
         }

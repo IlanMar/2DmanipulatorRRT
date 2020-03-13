@@ -54,17 +54,23 @@ namespace ManipulatorRRT
                 float dist = distanceToNeighbor(Crand, T);
 
                 if (T[Crand.parentId].V == Ct) { counter++; }//пытаемся чделать так чтобы из начальной конфигурации он не возвращался к начальной конфигурации
+                else counter--;
                 
 
-                if (counter > 50 & T[Crand.parentId].V == Ct) { key2 = false; }
-                else key2 = true;
+                if (counter > 40 & T[Crand.parentId].V == Ct) { key2 = false; }
+                if (counter < 40) key2 = true;
                
                     ManipulatorConf Cnear = T[Crand.parentId].V;//NearestNeighbor(Crand, T);
                     ManipulatorConf Cnew = FindStoppingState(Cnear, Crand);//пока вернем Crand
-                if (8 < dist & dist < edgeMaxLenght & g & Crand.distanceToParent < edgeMaxLenght & key2)// максимальная длина веток
+                float y = findDistanseBetweenV(Cnear, Cnew);
+                if (y > edgeMaxLenght)
                 {
-                    
+                }
 
+                if (5 < dist & /*dist < edgeMaxLenght &*/ g &  key2 & y< edgeMaxLenght& y > 2)// максимальная длина веток
+                {
+
+                  
                         //11. Шаг
                         if (Cnew != Cnear & Cnear.Xglob4 != Cnew.Xglob4 & Cnear.Yglob4 != Cnew.Yglob4)
                         {
@@ -79,7 +85,9 @@ namespace ManipulatorRRT
                             GT2.V = Cnew;
                             GT2.E = Eb;
                             T.Add(GT2);
-
+                        if (Cnear.distanceToParent > 30 || Cnew.distanceToParent > edgeMaxLenght)
+                        {
+                        }
                             success = (Distance(Eb, Cgoal) <= 15);
                         }
                     
@@ -343,7 +351,7 @@ namespace ManipulatorRRT
 
             //}
              List<int> randomVs = new List<int>();
-             for (int i = 1; i < T.Count; i++) 
+             for (int i = 0; i < T.Count; i++) 
              {
                  //создаем список с случайными вершинами из списка
                  int tempStep = 0;
@@ -459,7 +467,7 @@ namespace ManipulatorRRT
             bool generateKey = true;
             int Yleft = -2000;
             int Yright = 2000;
-            int rrr = rand.Next(0, T.Count - 1);
+            int rrr = rand.Next(0, (T.Count - 1)) ;  //надо чтобы первый элемент в списке не встречался больше
             if (T.Count == 1)
             {
                 rrr = 0;
@@ -551,6 +559,9 @@ namespace ManipulatorRRT
                 float c = a1 * a1 + b1 * b1;  //теорема пифагора
                 float y1 = (float)Math.Sqrt(c);//вычисляем дистанцию до родительского звена
             Crand.distanceToParent = y1;
+            if (y1 > 25)
+            {
+            }
             
 
             return Crand;
@@ -619,8 +630,19 @@ namespace ManipulatorRRT
             return 0;
         }
        public Point[] obs = new Point[12];
+        float findDistanseBetweenV(ManipulatorConf A, ManipulatorConf B)
+        {
+            var a = (A.Xglob4 - B.Xglob4);
+            var b = (A.Yglob4 - B.Yglob4);
+            //var c = 0.5;
+            // var y = Math.Pow((a * a + b * b), 0.5);
+            float c = a * a + b * b;  //теорема пифагора
+            float y = (float)Math.Sqrt(c);
 
-       bool intersectionsCheck(ManipulatorConf Crand, List<PointF> obsList)
+            return y;
+        }
+
+        bool intersectionsCheck(ManipulatorConf Crand, List<PointF> obsList)
        {
            bool vertex = false;
            bool edge = false;

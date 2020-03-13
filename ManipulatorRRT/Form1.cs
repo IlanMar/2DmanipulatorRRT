@@ -58,7 +58,7 @@ namespace ManipulatorRRT
 
 
             //MessageBox.Show((sw.ElapsedMilliseconds / 100.0).ToString());//выволим время работы ррт
-            textBox7.Text = (sw.ElapsedMilliseconds / 100.0).ToString();
+            textBox7.Text = (sw.ElapsedMilliseconds / 1000.0).ToString();
 
             //paintRobot();
         }

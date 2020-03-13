@@ -125,6 +125,11 @@ namespace ManipulatorRRT
                 {
                    // return Crand;
                 }
+
+                
+
+
+
             return T[tempI].V;
               //  else { Mr.manipulatorLinks.Remove(Mr.manipulatorLinks.Last()); }
 

@@ -51,14 +51,16 @@ namespace ManipulatorRRT
                 // 7 и 8 шаги пропущены
                 // 9. Шаг
                 float dist = distanceToNeighbor(Crand, T);
+               
 
 
                 if (8< dist && dist < edgeMaxLenght && g && Crand.distanceToParent< edgeMaxLenght)// максимальная длина веток
                 {
                     ManipulatorConf Cnear = NearestNeighbor(Crand, T);
                     ManipulatorConf Cnew = FindStoppingState(Cnear, Crand);//пока вернем Crand
+                    float y = findDistanseBetweenV(Cnear, Cnew);
                     //11. Шаг
-                    if (Cnew != Cnear && Cnear.Xglob4 != Cnew.Xglob4&&Cnear.Yglob4 != Cnew.Yglob4)
+                    if (Cnew != Cnear && Cnear.Xglob4 != Cnew.Xglob4&&Cnear.Yglob4 != Cnew.Yglob4&y< edgeMaxLenght)
                     {
                         Edge Eb = new Edge();
                         ManipulatorConf Vb = new ManipulatorConf();
@@ -602,7 +604,20 @@ namespace ManipulatorRRT
         }
        public Point[] obs = new Point[12];
 
-       bool intersectionsCheck(ManipulatorConf Crand, List<PointF> obsList)
+
+        float findDistanseBetweenV(ManipulatorConf A, ManipulatorConf B)
+        {
+            var a = (A.Xglob4 - B.Xglob4);
+            var b = (A.Yglob4 - B.Yglob4);
+            //var c = 0.5;
+            // var y = Math.Pow((a * a + b * b), 0.5);
+            float c = a * a + b * b;  //теорема пифагора
+            float y = (float)Math.Sqrt(c);
+
+            return y;
+        }
+
+        bool intersectionsCheck(ManipulatorConf Crand, List<PointF> obsList)
        {
            bool vertex = false;
            bool edge = false;

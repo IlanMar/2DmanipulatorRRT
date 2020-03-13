@@ -25,6 +25,7 @@ namespace ManipulatorRRT
         public float Yglob, Yglob2, Yglob3, Yglob4, YglobPlat;
 
         public float distanceToParent;
+        public int parentID;
 
 
     }

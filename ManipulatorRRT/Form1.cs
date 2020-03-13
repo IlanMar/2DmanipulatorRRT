@@ -35,7 +35,12 @@ namespace ManipulatorRRT
         bool k = false;
         private void button1_Click(object sender, EventArgs e)
         {
-
+            bool checkBox = false;
+            if (checkBox1.Checked)
+            {
+                 checkBox = true;
+            }
+            else checkBox = false;
             System.Diagnostics.Stopwatch sw = new Stopwatch();//время работы ррт
             sw.Start();
             //MessageBox.Show("");
@@ -48,7 +53,7 @@ namespace ManipulatorRRT
             Nsteps = int.Parse(textBox5.Text, CultureInfo.InvariantCulture.NumberFormat);
             //RRT Rrt = new RRT();
             int qincrement= int.Parse(textBox6.Text, CultureInfo.InvariantCulture.NumberFormat);
-            k = Rrt.RRTStart(Cinit, Cgoal, Nsteps, Nextend, edgeMaxLenght,Obs.ObsList,qincrement);
+            k = Rrt.RRTStart(Cinit, Cgoal, Nsteps, Nextend, edgeMaxLenght,Obs.ObsList,qincrement, checkBox);
             textBox1.Text = Rrt.success.ToString();            
             //Rrt.setT();
             paintTree();

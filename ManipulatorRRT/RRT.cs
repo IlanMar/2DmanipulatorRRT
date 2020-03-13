@@ -28,7 +28,7 @@ namespace ManipulatorRRT
 
     
 
-        public bool RRTStart(PointF Cinit, PointF Cgoal, int Nsteps, int Nextend, int edgeMaxLenght, List<PointF> obsList, int qincrement)// Edge P)// List<PointF> obsList
+        public bool RRTStart(PointF Cinit, PointF Cgoal, int Nsteps, int Nextend, int edgeMaxLenght, List<PointF> obsList, int qincrement, bool checkBox1)// Edge P)// List<PointF> obsList
         {
             // 1. Шаг T(V.E)={Cinit, 0}
             GraphT GT = new GraphT();// объект вершина   
@@ -50,13 +50,19 @@ namespace ManipulatorRRT
                 bool g = intersectionsCheck(Crand, obsList);  //передалать для 3Д
                 // 7 и 8 шаги пропущены
                 // 9. Шаг
-                float dist = distanceToNeighbor(Crand, T);
+                float dist = distanceToNeighbor(Crand, T);  
                
 
 
                 if (8< dist && dist < edgeMaxLenght && g && Crand.distanceToParent< edgeMaxLenght)// максимальная длина веток
                 {
-                    ManipulatorConf Cnear = NearestNeighbor(Crand, T);
+                    ManipulatorConf Cnear = T[Crand.parentID].V;//все это для того чтобы через чек бокс можно было выбирать два варианта приращения
+                    if (checkBox1)
+                    {
+                         Cnear = T[Crand.parentID].V;// NearestNeighbor(Crand, T, Crand.parentID);
+                    }
+                    else {  Cnear = NearestNeighbor(Crand, T, Crand.parentID); }
+
                     ManipulatorConf Cnew = FindStoppingState(Cnear, Crand);//пока вернем Crand
                     float y = findDistanseBetweenV(Cnear, Cnew);
                     //11. Шаг
@@ -92,7 +98,7 @@ namespace ManipulatorRRT
             return (float)y;
         }
 
-        ManipulatorConf NearestNeighbor(ManipulatorConf Crand, List<GraphT>  T)// 
+        ManipulatorConf NearestNeighbor(ManipulatorConf Crand, List<GraphT>  T,int parentID)// 
         {
                 if (T.Count == 0) { return Crand; }
                 float temp = 99999;
@@ -119,9 +125,9 @@ namespace ManipulatorRRT
                 {
                    // return Crand;
                 }
-                return T[tempI].V;
+            return T[tempI].V;
               //  else { Mr.manipulatorLinks.Remove(Mr.manipulatorLinks.Last()); }
-           
+
         }
         bool genCoord(ManipulatorConf Crand, ManipulatorConf Tiv)
         {
@@ -524,11 +530,13 @@ namespace ManipulatorRRT
             {
                  a1 = (T[rrr].V.Xglob4 - Crand.Xglob4);
                  b1 = (T[rrr].V.Yglob4 - Crand.Yglob4);
+                Crand.parentID = rrr;
             }
             if (step % 2 == 0)
             {
                  a1 = (T[nPoint].V.Xglob4 - Crand.Xglob4);
                  b1 = (T[nPoint].V.Yglob4 - Crand.Yglob4);
+                Crand.parentID = nPoint;
             }
 
                 //var c = 0.5;

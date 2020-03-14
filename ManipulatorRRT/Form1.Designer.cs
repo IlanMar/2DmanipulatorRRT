@@ -54,6 +54,8 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBox9 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -151,7 +153,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(1427, 433);
+            this.textBox4.Location = new System.Drawing.Point(1442, 433);
             this.textBox4.Margin = new System.Windows.Forms.Padding(2);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(68, 20);
@@ -229,7 +231,7 @@
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(1427, 409);
+            this.textBox6.Location = new System.Drawing.Point(1442, 409);
             this.textBox6.Margin = new System.Windows.Forms.Padding(2);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(68, 20);
@@ -292,11 +294,31 @@
             this.textBox8.TabIndex = 23;
             this.textBox8.Text = "20000";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(1303, 460);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(131, 13);
+            this.label10.TabIndex = 26;
+            this.label10.Text = "допустимые отклонения";
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(1442, 457);
+            this.textBox9.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(68, 20);
+            this.textBox9.TabIndex = 25;
+            this.textBox9.Text = "15";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1521, 651);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.textBox9);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.textBox8);
             this.Controls.Add(this.checkBox1);
@@ -357,6 +379,8 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBox9;
     }
 }
 

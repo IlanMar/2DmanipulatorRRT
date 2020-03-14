@@ -28,7 +28,7 @@ namespace ManipulatorRRT
 
     
 
-        public bool RRTStart(PointF Cinit, PointF Cgoal, int Nsteps, int Nextend, int edgeMaxLenght, List<PointF> obsList, int qincrement, bool checkBox1)// Edge P)// List<PointF> obsList
+        public bool RRTStart(PointF Cinit, PointF Cgoal, int Nsteps, int Nextend, int edgeMaxLenght, List<PointF> obsList, int qincrement, bool checkBox1, int dopustimueOtklonenia)// Edge P)// List<PointF> obsList
         {
             // 1. Шаг T(V.E)={Cinit, 0}
             GraphT GT = new GraphT();// объект вершина   
@@ -61,7 +61,7 @@ namespace ManipulatorRRT
                     {
                          Cnear = T[Crand.parentID].V;// NearestNeighbor(Crand, T, Crand.parentID);
                     }
-                    else {  Cnear = NearestNeighbor(Crand, T, Crand.parentID); }
+                    else {  Cnear = NearestNeighbor(Crand, T, Crand.parentID, dopustimueOtklonenia); }
 
                     ManipulatorConf Cnew = FindStoppingState(Cnear, Crand);//пока вернем Crand
                     float y = findDistanseBetweenV(Cnear, Cnew);
@@ -80,7 +80,7 @@ namespace ManipulatorRRT
                         GT2.E = Eb;
                         T.Add(GT2);
 
-                        success = (Distance(Eb, Cgoal) <= 15);
+                        success = (Distance(Eb, Cgoal) <= 20);
                     }
                 }
                 step = step + 1;
@@ -98,7 +98,7 @@ namespace ManipulatorRRT
             return (float)y;
         }
 
-        ManipulatorConf NearestNeighbor(ManipulatorConf Crand, List<GraphT>  T,int parentID)// 
+        ManipulatorConf NearestNeighbor(ManipulatorConf Crand, List<GraphT>  T,int parentID, int dopustimueOtklonenia)// 
         {
                 if (T.Count == 0) { return Crand; }
                 float temp = 99999;
@@ -115,7 +115,7 @@ namespace ManipulatorRRT
                 float answer= (float)Math.Sqrt(c);
 
                // var y = Math.Pow((a * a + b * b), 0.5);
-                    if (answer < temp && genCoord(Crand, T[i].V)) 
+                    if (answer < temp && genCoord(Crand, T[i].V, dopustimueOtklonenia)) 
                     {
                         tempI = i;
                         temp = answer; 
@@ -134,7 +134,7 @@ namespace ManipulatorRRT
               //  else { Mr.manipulatorLinks.Remove(Mr.manipulatorLinks.Last()); }
 
         }
-        bool genCoord(ManipulatorConf Crand, ManipulatorConf Tiv)
+        bool genCoord(ManipulatorConf Crand, ManipulatorConf Tiv, int dopustimueOtklonenia)
         {
             int i =0;
            // double temp = 9999;
@@ -171,10 +171,11 @@ namespace ManipulatorRRT
             }
 
             bool key1 = false; bool key2 = false; bool key3 = false; bool key4 = false;
-            if (k < 10) key1 = true;//здесь задаются допустимые отклонения манипулятора при генерации новой точки
-            if (k2 < 15) key2 = true;
-            if (k3 < 20) key3 = true;
-            if (k4 < 20) key4 = true;
+            
+            if (k < dopustimueOtklonenia) key1 = true;//здесь задаются допустимые отклонения манипулятора при генерации новой точки
+            if (k2 < dopustimueOtklonenia) key2 = true;
+            if (k3 < dopustimueOtklonenia) key3 = true;
+            if (k4 < dopustimueOtklonenia) key4 = true;
             // key1 = true; key2 = true;
             if (key1 && key2 && key3 && key4)
             {

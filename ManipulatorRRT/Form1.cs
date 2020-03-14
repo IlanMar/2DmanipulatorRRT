@@ -44,8 +44,8 @@ namespace ManipulatorRRT
             System.Diagnostics.Stopwatch sw = new Stopwatch();//время работы ррт
             sw.Start();
             //MessageBox.Show("");
-            
 
+           int  dopustimueOtklonenia = int.Parse(textBox9.Text, CultureInfo.InvariantCulture.NumberFormat);
 
             Cgoal.X = float.Parse(textBox2.Text, CultureInfo.InvariantCulture.NumberFormat);
             Cgoal.Y = float.Parse(textBox3.Text, CultureInfo.InvariantCulture.NumberFormat);
@@ -53,7 +53,7 @@ namespace ManipulatorRRT
             Nsteps = int.Parse(textBox5.Text, CultureInfo.InvariantCulture.NumberFormat);
             //RRT Rrt = new RRT();
             int qincrement= int.Parse(textBox6.Text, CultureInfo.InvariantCulture.NumberFormat);
-            k = Rrt.RRTStart(Cinit, Cgoal, Nsteps, Nextend, edgeMaxLenght,Obs.ObsList,qincrement, checkBox);
+            k = Rrt.RRTStart(Cinit, Cgoal, Nsteps, Nextend, edgeMaxLenght,Obs.ObsList,qincrement, checkBox, dopustimueOtklonenia);
             textBox1.Text = Rrt.success.ToString();            
             //Rrt.setT();
             paintTree();

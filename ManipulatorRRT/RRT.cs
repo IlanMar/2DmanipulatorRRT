@@ -28,7 +28,7 @@ namespace ManipulatorRRT
 
     
 
-        public bool RRTStart(PointF Cinit, PointF Cgoal, int Nsteps, int Nextend, int edgeMaxLenght, List<PointF> obsList, int qincrement, bool checkBox1, int dopustimueOtklonenia)// Edge P)// List<PointF> obsList
+        public bool RRTStart(PointF Cinit, PointF Cgoal, int Nsteps, int Nextend, int edgeMaxLenght, List<PointF> obsList, float qincrement, bool checkBox1, int dopustimueOtklonenia)// Edge P)// List<PointF> obsList
         {
             // 1. Шаг T(V.E)={Cinit, 0}
             GraphT GT = new GraphT();// объект вершина   
@@ -330,7 +330,7 @@ namespace ManipulatorRRT
         }
         ////////////
 
-        ManipulatorConf GenerateNewStare(int step, PointF Cgoal, int qincrement)
+        ManipulatorConf GenerateNewStare(int step, PointF Cgoal, float qincrement)
         {
             //здесь мы выбираем случайную вершину
             bool key = true;

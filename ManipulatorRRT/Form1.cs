@@ -52,7 +52,7 @@ namespace ManipulatorRRT
             int edgeMaxLenght =int.Parse(textBox4.Text, CultureInfo.InvariantCulture.NumberFormat);
             Nsteps = int.Parse(textBox5.Text, CultureInfo.InvariantCulture.NumberFormat);
             //RRT Rrt = new RRT();
-            int qincrement= int.Parse(textBox6.Text, CultureInfo.InvariantCulture.NumberFormat);
+            float qincrement= float.Parse(textBox6.Text, CultureInfo.InvariantCulture.NumberFormat);
             k = Rrt.RRTStart(Cinit, Cgoal, Nsteps, Nextend, edgeMaxLenght,Obs.ObsList,qincrement, checkBox, dopustimueOtklonenia);
             textBox1.Text = Rrt.success.ToString();            
             //Rrt.setT();

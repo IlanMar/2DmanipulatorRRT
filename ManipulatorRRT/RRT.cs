@@ -23,12 +23,12 @@ namespace ManipulatorRRT
         Random rand3 = new Random();
         Random rand4 = new Random();
         Random vrand = new Random();
-        int counter = 0;
-        bool key2 = true;
 
+         
 
+    
 
-        public bool RRTStart(PointF Cinit, PointF Cgoal, int Nsteps, int Nextend, int edgeMaxLenght, List<PointF> obsList, int qincrement)// Edge P)// List<PointF> obsList
+        public bool RRTStart(PointF Cinit, PointF Cgoal, int Nsteps, int Nextend, int edgeMaxLenght, List<PointF> obsList, float qincrement, bool checkBox1, int dopustimueOtklonenia)// Edge P)// List<PointF> obsList
         {
             // 1. Шаг T(V.E)={Cinit, 0}
             GraphT GT = new GraphT();// объект вершина   
@@ -38,7 +38,6 @@ namespace ManipulatorRRT
             GT.V = Ct;
             T.Add(GT);//список вершин
                       //3. Шаг success = false
-            counter = 0;
 
             // 4. Шаг Начало цикла
             while ((step < Nsteps) && (success == false))
@@ -51,46 +50,38 @@ namespace ManipulatorRRT
                 bool g = intersectionsCheck(Crand, obsList);  //передалать для 3Д
                 // 7 и 8 шаги пропущены
                 // 9. Шаг
-                float dist = distanceToNeighbor(Crand, T);
-
-                if (T[Crand.parentId].V == Ct) { counter++; }//пытаемся чделать так чтобы из начальной конфигурации он не возвращался к начальной конфигурации
-                else counter--;
-                
-
-                if (counter > 40 & T[Crand.parentId].V == Ct) { key2 = false; }
-                if (counter < 40) key2 = true;
+                float dist = distanceToNeighbor(Crand, T);  
                
-                    ManipulatorConf Cnear = T[Crand.parentId].V;//NearestNeighbor(Crand, T);
+
+
+                if (8< dist && dist < edgeMaxLenght && g && Crand.distanceToParent< edgeMaxLenght)// максимальная длина веток
+                {
+                    ManipulatorConf Cnear = T[Crand.parentID].V;//все это для того чтобы через чек бокс можно было выбирать два варианта приращения
+                    if (checkBox1)
+                    {
+                         Cnear = T[Crand.parentID].V;// NearestNeighbor(Crand, T, Crand.parentID);
+                    }
+                    else {  Cnear = NearestNeighbor(Crand, T, Crand.parentID, dopustimueOtklonenia); }
+
                     ManipulatorConf Cnew = FindStoppingState(Cnear, Crand);//пока вернем Crand
-                float y = findDistanseBetweenV(Cnear, Cnew);
-                if (y > edgeMaxLenght)
-                {
-                }
+                    float y = findDistanseBetweenV(Cnear, Cnew);
+                    //11. Шаг
+                    if (Cnew != Cnear && Cnear.Xglob4 != Cnew.Xglob4&&Cnear.Yglob4 != Cnew.Yglob4&y< edgeMaxLenght)
+                    {
+                        Edge Eb = new Edge();
+                        ManipulatorConf Vb = new ManipulatorConf();
+                        Eb.p1.X = Cnear.Xglob4;//точка p1 это старый узел а p2 это новый узел
+                        Eb.p1.Y = Cnear.Yglob4;
+                        Eb.p2.X = Cnew.Xglob4;
+                        Eb.p2.Y = Cnew.Yglob4;
+                        var GT2 = new GraphT();
+                        GT2 = new GraphT();
+                        GT2.V = Cnew;
+                        GT2.E = Eb;
+                        T.Add(GT2);
 
-                if (5 < dist & /*dist < edgeMaxLenght &*/ g &  key2 & y< edgeMaxLenght& y > 2)// максимальная длина веток
-                {
-
-                  
-                        //11. Шаг
-                        if (Cnew != Cnear & Cnear.Xglob4 != Cnew.Xglob4 & Cnear.Yglob4 != Cnew.Yglob4)
-                        {
-                            Edge Eb = new Edge();
-                            ManipulatorConf Vb = new ManipulatorConf();
-                            Eb.p1.X = Cnear.Xglob4;//точка p1 это старый узел а p2 это новый узел
-                            Eb.p1.Y = Cnear.Yglob4;
-                            Eb.p2.X = Cnew.Xglob4;
-                            Eb.p2.Y = Cnew.Yglob4;
-                            var GT2 = new GraphT();
-                            GT2 = new GraphT();
-                            GT2.V = Cnew;
-                            GT2.E = Eb;
-                            T.Add(GT2);
-                        if (Cnear.distanceToParent > 30 || Cnew.distanceToParent > edgeMaxLenght)
-                        {
-                        }
-                            success = (Distance(Eb, Cgoal) <= 15);
-                        }
-                    
+                        success = (Distance(Eb, Cgoal) <= 20);
+                    }
                 }
                 step = step + 1;
             }
@@ -107,7 +98,7 @@ namespace ManipulatorRRT
             return (float)y;
         }
 
-        ManipulatorConf NearestNeighbor(ManipulatorConf Crand, List<GraphT>  T)// 
+        ManipulatorConf NearestNeighbor(ManipulatorConf Crand, List<GraphT>  T,int parentID, int dopustimueOtklonenia)// 
         {
                 if (T.Count == 0) { return Crand; }
                 float temp = 99999;
@@ -124,7 +115,7 @@ namespace ManipulatorRRT
                 float answer= (float)Math.Sqrt(c);
 
                // var y = Math.Pow((a * a + b * b), 0.5);
-                    if (answer < temp && genCoord(Crand, T[i].V)) 
+                    if (answer < temp && genCoord(Crand, T[i].V, dopustimueOtklonenia)) 
                     {
                         tempI = i;
                         temp = answer; 
@@ -135,11 +126,15 @@ namespace ManipulatorRRT
                    // return Crand;
                 }
 
-                return T[tempI].V;
+                
+
+
+
+            return T[tempI].V;
               //  else { Mr.manipulatorLinks.Remove(Mr.manipulatorLinks.Last()); }
-           
+
         }
-        bool genCoord(ManipulatorConf Crand, ManipulatorConf Tiv)
+        bool genCoord(ManipulatorConf Crand, ManipulatorConf Tiv, int dopustimueOtklonenia)
         {
             int i =0;
            // double temp = 9999;
@@ -176,10 +171,11 @@ namespace ManipulatorRRT
             }
 
             bool key1 = false; bool key2 = false; bool key3 = false; bool key4 = false;
-            if (k < 10) key1 = true;//здесь задаются допустимые отклонения манипулятора при генерации новой точки
-            if (k2 < 15) key2 = true;
-            if (k3 < 20) key3 = true;
-            if (k4 < 20) key4 = true;
+            
+            if (k < dopustimueOtklonenia) key1 = true;//здесь задаются допустимые отклонения манипулятора при генерации новой точки
+            if (k2 < dopustimueOtklonenia) key2 = true;
+            if (k3 < dopustimueOtklonenia) key3 = true;
+            if (k4 < dopustimueOtklonenia) key4 = true;
             // key1 = true; key2 = true;
             if (key1 && key2 && key3 && key4)
             {
@@ -334,7 +330,7 @@ namespace ManipulatorRRT
         }
         ////////////
 
-        ManipulatorConf GenerateNewStare(int step, PointF Cgoal, int qincrement)
+        ManipulatorConf GenerateNewStare(int step, PointF Cgoal, float qincrement)
         {
             //здесь мы выбираем случайную вершину
             bool key = true;
@@ -467,41 +463,36 @@ namespace ManipulatorRRT
             bool generateKey = true;
             int Yleft = -2000;
             int Yright = 2000;
-            int rrr = rand.Next(0, (T.Count - 1)) ;  //надо чтобы первый элемент в списке не встречался больше
-            if (T.Count == 1)
-            {
-                rrr = 0;
-                nPoint = 0;
-            }
+            int rrr = rand.Next(0, T.Count - 1);
             while (generateKey)
                 {
-                 if (step % 2 == 0)
-                  {
+                if (step % 2 == 0)
+                {
 
-                      Crand.q = T[nPoint].V.q + qincrement/2 - (float)rand.NextDouble() * (qincrement*2)/2;  //(5-2*rand.NextDouble(0, 5)-5);// rand.Next(0, 180); //угл относительно предыдущего звена
+                    Crand.q = T[nPoint].V.q + qincrement - (float)rand.NextDouble() * (qincrement*2);  //(5-2*rand.NextDouble(0, 5)-5);// rand.Next(0, 180); //угл относительно предыдущего звена
 
-                      Crand.q2 = T[nPoint].V.q2 - qincrement/2 + (float)rand.NextDouble() * (qincrement * 2)/2;            //+ (5 - 2 * rand2.Next(0, 5) - 5);//rand.Next(0, 360); //угл относительно предидущего звена
+                    Crand.q2 = T[nPoint].V.q2 - qincrement + (float)rand.NextDouble() * (qincrement * 2);            //+ (5 - 2 * rand2.Next(0, 5) - 5);//rand.Next(0, 360); //угл относительно предидущего звена
 
-                      Crand.q3 = T[nPoint].V.q3 + qincrement - (float)rand.NextDouble() * (qincrement * 2);            // + (5 - 2 * rand3.Next(0, 5) - 5); //rand2.Next(0, 360); //угл относительно предидущего звена//rand2
+                    Crand.q3 = T[nPoint].V.q3 + qincrement - (float)rand.NextDouble() * (qincrement * 2);            // + (5 - 2 * rand3.Next(0, 5) - 5); //rand2.Next(0, 360); //угл относительно предидущего звена//rand2
 
-                      Crand.q4 = T[nPoint].V.q4 - qincrement + (float)rand.NextDouble() * (qincrement * 2);             // + (5 - 2 * rand4.Next(0, 5) - 5);// rand3.Next(0, 360); //угл относительно предидущего звена//rand3
-                      Crand.qP = T[nPoint].V.qP - 10 + (float)rand.NextDouble() * 20;//закоментировать для зафиксирования основания
-
-
-                  }
-                   if (step % 2 != 0)
-                   {
+                    Crand.q4 = T[nPoint].V.q4 - qincrement + (float)rand.NextDouble() * (qincrement * 2);             // + (5 - 2 * rand4.Next(0, 5) - 5);// rand3.Next(0, 360); //угл относительно предидущего звена//rand3
+                    Crand.qP = T[nPoint].V.qP - 10 + (float)rand.NextDouble() * 20;//закоментировать для зафиксирования основания
 
 
-                       Crand.q = T[rrr].V.q + qincrement - (float)rand.NextDouble() * (qincrement * 2);  //(5-2*rand.NextDouble(0, 5)-5);// rand.Next(0, 180); //угл относительно предидущего звена
+                }
+                if (step % 2 != 0)
+                {
 
-                       Crand.q2 = T[rrr].V.q2 - qincrement + (float)rand.NextDouble() * (qincrement * 2);            //+ (5 - 2 * rand2.Next(0, 5) - 5);//rand.Next(0, 360); //угл относительно предидущего звена
+                    
+                    Crand.q = T[rrr].V.q + qincrement - (float)rand.NextDouble() * (qincrement * 2);  //(5-2*rand.NextDouble(0, 5)-5);// rand.Next(0, 180); //угл относительно предидущего звена
 
-                       Crand.q3 = T[rrr].V.q3 - qincrement  + (float)rand.NextDouble() * (qincrement * 2);            // + (5 - 2 * rand3.Next(0, 5) - 5); //rand2.Next(0, 360); //угл относительно предидущего звена//rand2
+                    Crand.q2 = T[rrr].V.q2 - qincrement + (float)rand.NextDouble() * (qincrement * 2);            //+ (5 - 2 * rand2.Next(0, 5) - 5);//rand.Next(0, 360); //угл относительно предидущего звена
 
-                       Crand.q4 = T[rrr].V.q4 + qincrement - (float)rand.NextDouble() * (qincrement * 2);             // + (5 - 2 * rand4.Next(0, 5) - 5);// rand3.Next(0, 360); //угл относительно предидущего звена//rand3
-                      Crand.qP =  T[rrr].V.qP + 10 - (float)rand.NextDouble() * 20;//закоментировать для зафиксирования основания
-                   }
+                    Crand.q3 = T[rrr].V.q3 - qincrement  + (float)rand.NextDouble() * (qincrement * 2);            // + (5 - 2 * rand3.Next(0, 5) - 5); //rand2.Next(0, 360); //угл относительно предидущего звена//rand2
+
+                    Crand.q4 = T[rrr].V.q4 + qincrement - (float)rand.NextDouble() * (qincrement * 2);             // + (5 - 2 * rand4.Next(0, 5) - 5);// rand3.Next(0, 360); //угл относительно предидущего звена//rand3
+                   Crand.qP =  T[rrr].V.qP + 10 - (float)rand.NextDouble() * 20;//закоментировать для зафиксирования основания
+                }
 
                 Crand.linklenght = 80; 
                 Crand.linklenght2 = 100; //длина второго звена
@@ -545,13 +536,13 @@ namespace ManipulatorRRT
             {
                  a1 = (T[rrr].V.Xglob4 - Crand.Xglob4);
                  b1 = (T[rrr].V.Yglob4 - Crand.Yglob4);
-                Crand.parentId = rrr;
+                Crand.parentID = rrr;
             }
             if (step % 2 == 0)
             {
                  a1 = (T[nPoint].V.Xglob4 - Crand.Xglob4);
                  b1 = (T[nPoint].V.Yglob4 - Crand.Yglob4);
-                Crand.parentId = nPoint;
+                Crand.parentID = nPoint;
             }
 
                 //var c = 0.5;
@@ -559,10 +550,6 @@ namespace ManipulatorRRT
                 float c = a1 * a1 + b1 * b1;  //теорема пифагора
                 float y1 = (float)Math.Sqrt(c);//вычисляем дистанцию до родительского звена
             Crand.distanceToParent = y1;
-            if (y1 > 25)
-            {
-            }
-            
 
             return Crand;
         }
@@ -630,6 +617,8 @@ namespace ManipulatorRRT
             return 0;
         }
        public Point[] obs = new Point[12];
+
+
         float findDistanseBetweenV(ManipulatorConf A, ManipulatorConf B)
         {
             var a = (A.Xglob4 - B.Xglob4);

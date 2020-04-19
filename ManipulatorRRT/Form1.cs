@@ -35,20 +35,25 @@ namespace ManipulatorRRT
         bool k = false;
         private void button1_Click(object sender, EventArgs e)
         {
-
+            bool checkBox = false;
+            if (checkBox1.Checked)
+            {
+                 checkBox = true;
+            }
+            else checkBox = false;
             System.Diagnostics.Stopwatch sw = new Stopwatch();//время работы ррт
             sw.Start();
             //MessageBox.Show("");
-            
 
+           int  dopustimueOtklonenia = int.Parse(textBox9.Text, CultureInfo.InvariantCulture.NumberFormat);
 
             Cgoal.X = float.Parse(textBox2.Text, CultureInfo.InvariantCulture.NumberFormat);
             Cgoal.Y = float.Parse(textBox3.Text, CultureInfo.InvariantCulture.NumberFormat);
             int edgeMaxLenght =int.Parse(textBox4.Text, CultureInfo.InvariantCulture.NumberFormat);
             Nsteps = int.Parse(textBox5.Text, CultureInfo.InvariantCulture.NumberFormat);
             //RRT Rrt = new RRT();
-            int qincrement= int.Parse(textBox6.Text, CultureInfo.InvariantCulture.NumberFormat);
-            k = Rrt.RRTStart(Cinit, Cgoal, Nsteps, Nextend, edgeMaxLenght,Obs.ObsList,qincrement);
+            float qincrement= float.Parse(textBox6.Text, CultureInfo.InvariantCulture.NumberFormat);
+            k = Rrt.RRTStart(Cinit, Cgoal, Nsteps, Nextend, edgeMaxLenght,Obs.ObsList,qincrement, checkBox, dopustimueOtklonenia);
             textBox1.Text = Rrt.success.ToString();            
             //Rrt.setT();
             paintTree();
@@ -59,7 +64,7 @@ namespace ManipulatorRRT
 
             //MessageBox.Show((sw.ElapsedMilliseconds / 100.0).ToString());//выволим время работы ррт
             textBox7.Text = (sw.ElapsedMilliseconds / 1000.0).ToString();
-
+            textBox8.Text = (Rrt.T.Count).ToString(); ; 
             //paintRobot();
         }
         private void button2_Click(object sender, EventArgs e)

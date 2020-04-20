@@ -11,7 +11,7 @@ namespace ManipulatorRRT
 
     class RRT
     {
-       // Form1 form = new Form1();
+        // Form1 form = new Form1();
         public List<GraphT> T = new List<GraphT>(); // Список из Т где Т это вершина + ребро(V,E).
         ManipulatorConf V = new ManipulatorConf(); //вершина графа V, т.е конфигурация манипулятора
         Edge E = new Edge();// ребро графа       
@@ -22,9 +22,7 @@ namespace ManipulatorRRT
         Random rand2 = new Random();
         Random rand3 = new Random();
         Random rand4 = new Random();
-        Random vrand = new Random();
-
-         
+        Random vrand = new Random();        
 
     
 
@@ -43,15 +41,14 @@ namespace ManipulatorRRT
             while ((step < Nsteps) && (success == false))
             {
 
-              //  form.paintTree(T);
+                //  form.paintTree(T);
                 // 5. шаг пропущен
                 // 6. 
                 ManipulatorConf Crand = GenerateNewStare(step+8876, Cgoal, qincrement);  //GenerateNewState
                 bool g = intersectionsCheck(Crand, obsList);  //передалать для 3Д
                 // 7 и 8 шаги пропущены
                 // 9. Шаг
-                float dist = distanceToNeighbor(Crand, T);  
-               
+                float dist = distanceToNeighbor(Crand, T);                
 
 
                 if (8< dist && dist < edgeMaxLenght && g && Crand.distanceToParent< edgeMaxLenght)// максимальная длина веток
@@ -124,10 +121,7 @@ namespace ManipulatorRRT
                 if (temp > 100) //если новая точка ближе чем 40 к любой из точек то тру
                 {
                    // return Crand;
-                }
-
-                
-
+                }              
 
 
             return T[tempI].V;
@@ -233,7 +227,7 @@ namespace ManipulatorRRT
                 if (k2 < 15) key2 = true;
                 if (k3 < 15) key3 = true;
                 if (k4 < 15) key4 = true;
-               // key1 = true; key2 = true;
+                // key1 = true; key2 = true;
                 if (y < temp && key1 && key2 && key3 && key4)
                 {
                     tempI = i;
@@ -246,7 +240,7 @@ namespace ManipulatorRRT
             }
             return (float)temp;
         }
-      //  Random rand4 = new Random();
+        //  Random rand4 = new Random();
         ManipulatorConf GenerateNewStare2(int step)
         {
 
@@ -255,7 +249,7 @@ namespace ManipulatorRRT
             Random trand = new Random(step);
             Random trand2 = new Random(step + 1);
             Random trand3 = new Random(step + 2);
-             Random trand4 = new Random(step+3);
+            Random trand4 = new Random(step+3);
             ManipulatorConf Crand = new ManipulatorConf();
             bool generateKey = true;
             while (generateKey)
@@ -445,20 +439,12 @@ namespace ManipulatorRRT
                     //    min = int.MaxValue;
                     //}
 
-
-                }
-                //}
-                //     }
+                }               
             }
             randomVs.Clear();
-             int nPoint = nearestPoint;//hh
+            int nPoint = nearestPoint;//hh
           //  Random RandomNumber1 = new Random(DateTime.Now.Millisecond);
-
-         //   Random rand = new Random(step);
-        ///    Random rand2 = new Random(step + 1);
-         //   Random rand3 = new Random(step + 2);
-          //  Random rand4 = new Random(step+3);
-          //  Random rand5 = new Random(step + 5);
+       
             ManipulatorConf Crand = new ManipulatorConf();
             bool generateKey = true;
             int Yleft = -2000;
@@ -478,11 +464,9 @@ namespace ManipulatorRRT
                     Crand.q4 = T[nPoint].V.q4 - qincrement + (float)rand.NextDouble() * (qincrement * 2);             // + (5 - 2 * rand4.Next(0, 5) - 5);// rand3.Next(0, 360); //угл относительно предидущего звена//rand3
                     Crand.qP = T[nPoint].V.qP - 10 + (float)rand.NextDouble() * 20;//закоментировать для зафиксирования основания
 
-
                 }
                 if (step % 2 != 0)
                 {
-
                     
                     Crand.q = T[rrr].V.q + qincrement - (float)rand.NextDouble() * (qincrement * 2);  //(5-2*rand.NextDouble(0, 5)-5);// rand.Next(0, 180); //угл относительно предидущего звена
 
@@ -491,7 +475,7 @@ namespace ManipulatorRRT
                     Crand.q3 = T[rrr].V.q3 - qincrement  + (float)rand.NextDouble() * (qincrement * 2);            // + (5 - 2 * rand3.Next(0, 5) - 5); //rand2.Next(0, 360); //угл относительно предидущего звена//rand2
 
                     Crand.q4 = T[rrr].V.q4 + qincrement - (float)rand.NextDouble() * (qincrement * 2);             // + (5 - 2 * rand4.Next(0, 5) - 5);// rand3.Next(0, 360); //угл относительно предидущего звена//rand3
-                   Crand.qP =  T[rrr].V.qP + 10 - (float)rand.NextDouble() * 20;//закоментировать для зафиксирования основания
+                    Crand.qP =  T[rrr].V.qP + 10 - (float)rand.NextDouble() * 20;   //закоментировать для зафиксирования основания
                 }
 
                 Crand.linklenght = 80; 
@@ -616,7 +600,7 @@ namespace ManipulatorRRT
             //if (p1.X == T[0].V.q2 && p1.Y == T[0].V.q) { return 0; }
             return 0;
         }
-       public Point[] obs = new Point[12];
+        public Point[] obs = new Point[12];
 
 
         float findDistanseBetweenV(ManipulatorConf A, ManipulatorConf B)
@@ -649,37 +633,7 @@ namespace ManipulatorRRT
            //obs[9].X = 30; obs[9].Y = 220;
            //obs[10].X = 0; obs[10].Y = 290;
            //obs[11].X = 30; obs[11].Y = 290;
-
-
-           ////    50  >=    Xglob4   or Xglob4 >=60 and 40 >= Yglob4 or Yglob4 >= 90
-           //if ((obs[0].X > Crand.Xglob4 || Crand.Xglob4 > obs[1].X) || (obs[0].Y > Crand.Yglob4 || Crand.Yglob4 > obs[2].Y))
-           //{
-           //    if ((obs[4].X > Crand.Xglob4 || Crand.Xglob4 > obs[5].X) || (obs[4].Y > Crand.Yglob4 || Crand.Yglob4 > obs[6].Y))
-           //    {
-           //        //теперь проверяем промежуточные звенеья на попадание на препятствие
-           //        if ((obs[0].X > Crand.Xglob || Crand.Xglob > obs[1].X) || (obs[0].Y > Crand.Yglob || Crand.Yglob > obs[2].Y))
-           //        {
-           //            if ((obs[4].X > Crand.Xglob || Crand.Xglob > obs[5].X) || (obs[4].Y > Crand.Yglob || Crand.Yglob > obs[6].Y))
-           //            {
-           //                //третье препяствие
-           //                if ((obs[8].X > Crand.Xglob4 || Crand.Xglob4 > obs[9].X) || (obs[8].Y > Crand.Yglob4 || Crand.Yglob4 > obs[10].Y))
-           //                {
-           //                    if ((obs[4].X > Crand.Xglob4 || Crand.Xglob4 > obs[5].X) || (obs[4].Y > Crand.Yglob4 || Crand.Yglob4 > obs[6].Y))
-           //                    {
-           //                        if ((obs[8].X > Crand.Xglob3 || Crand.Xglob3 > obs[9].X) || (obs[8].Y > Crand.Yglob3 || Crand.Yglob3 > obs[10].Y))
-           //                        {
-           //                            if ((obs[4].X > Crand.Xglob3 || Crand.Xglob3 > obs[5].X) || (obs[4].Y > Crand.Yglob3 || Crand.Yglob3 > obs[6].Y))
-           //                            {
-
-           //                            //    vertex = true;
-           //                            }
-           //                        }
-           //                    }
-           //                }
-           //            }
-           //        }
-           //    }
-           //}
+         
            float x2,y2,Xa,Ya,Xb,Yb;
            x2 = 0; y2 = 0; Ya = 0;
 
@@ -708,54 +662,8 @@ namespace ManipulatorRRT
 
                 } 
 
-            }
-
-               // for (int i = 0; i < 4; i++)//i < 3 потому что мы пока не учитываетм отрезое от основания одо 1го звена
-               //{
-               //    for (int j = 0; j < 30; j++)
-               //    {
-               //        if (i == 0) { x = Crand.Xglob; y = Crand.Yglob; Xb =Crand.Xglob2; Yb= Crand.Yglob2;}
-               //        if (i == 1) { x = Crand.Xglob2; y = Crand.Yglob2;Xb =Crand.Xglob3; Yb= Crand.Yglob3;}
-               //        if (i == 2) { x = Crand.Xglob3; y = Crand.Yglob3; Xb =Crand.Xglob4; Yb= Crand.Yglob4;}
-               //        if (i == 3) { x = Crand.Xglob4; y = Crand.Yglob4; }
-
-                       
-               //        Xa=x;
-               //        Ya = y;
-               //        ///////
-               //        double distBetweenManipAndObs =31; 
-               //        if (i != 3)
-               //        {
-                          
-               //            var Rab = Math.Sqrt((Xb - Xa) * (Xb - Xa) + (Yb - Ya) * (Yb - Ya));
-               //            var Rac = Rab / 30;
-               //            Rac = Rac * j;
-               //            var z = Rac / Rab;
-               //           // z = 1;
-               //            var Xc = Xa + (Xb - Xa) * z;
-               //            var Yc = Ya + (Yb - Ya) * z;
-               //            //x = (float)Xc;
-               //            //y = (float)Yc;
-
-               //            for (int obl = 0; obl < obsList.Count; obl++)//сравниваем дистанцияю между каждой точкой звена и кружком препяттвия
-               //            {
-               //                 distBetweenManipAndObs= Math.Sqrt((obsList[obl].X - Xc) * (obsList[obl].X - Xc) + (obsList[obl].Y - Yc) * (obsList[obl].Y - Yc));
-               //            }
-
-
-               //        }
-
-               //        if (distBetweenManipAndObs < 30)
-               //        {
-               //            return false;
-               //        }
-              
-
-               //    }
-
-               //}
+            }           
            
-
                // х1, у1 и х2,у2 - координаты вершин первого отрезка;
                //х3, у3 и х4,у4 - координаты вершин второго отрезка;
 

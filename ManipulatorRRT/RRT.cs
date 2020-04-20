@@ -23,7 +23,6 @@ namespace ManipulatorRRT
         Random rand3 = new Random();
         Random rand4 = new Random();
         Random vrand = new Random();        
-
     
 
         public bool RRTStart(PointF Cinit, PointF Cgoal, int Nsteps, int Nextend, int edgeMaxLenght, List<PointF> obsList, float qincrement, bool checkBox1, int dopustimueOtklonenia)// Edge P)// List<PointF> obsList
@@ -35,7 +34,7 @@ namespace ManipulatorRRT
             ManipulatorConf Ct = GenerateNewStare2(72087);   //step,  728387  //генерируем начальное положение манипулятора (пока что заданно жестко)
             GT.V = Ct;
             T.Add(GT);//список вершин
-                      //3. Шаг success = false
+            //3. Шаг success = false
 
             // 4. Шаг Начало цикла
             while ((step < Nsteps) && (success == false))
@@ -43,7 +42,7 @@ namespace ManipulatorRRT
 
                 //  form.paintTree(T);
                 // 5. шаг пропущен
-                // 6. 
+                // 6.  
                 ManipulatorConf Crand = GenerateNewStare(step+8876, Cgoal, qincrement);  //GenerateNewState
                 bool g = intersectionsCheck(Crand, obsList);  //передалать для 3Д
                 // 7 и 8 шаги пропущены
@@ -105,7 +104,7 @@ namespace ManipulatorRRT
                     //var y = Math.Pow((Math.Pow(Mr.manipulatorLinks[i].Xglob4 - q1.Xglob4, stepen) + Math.Pow(Mr.manipulatorLinks[i].Yglob4 - q1.Yglob4, stepen)), 1 / 2);
                     var a = (T[i].V.Xglob4 - Crand.Xglob4);
                     var b = (T[i].V.Yglob4 - Crand.Yglob4);
-                   // var c = 0.5;
+                    // var c = 0.5;
 
                     float  c = a * a + b * b;
 
@@ -129,8 +128,7 @@ namespace ManipulatorRRT
 
         }
         bool genCoord(ManipulatorConf Crand, ManipulatorConf Tiv, int dopustimueOtklonenia)
-        {
-            int i =0;
+        {           
            // double temp = 9999;
            // int tempI = 0;
             var a = (Tiv.Xglob4 - Crand.Xglob4);
@@ -190,7 +188,7 @@ namespace ManipulatorRRT
                 var a = (T[i].V.Xglob4 - Crand.Xglob4);
                 var b = (T[i].V.Yglob4 - Crand.Yglob4);
                 //var c = 0.5;
-               // var y = Math.Pow((a * a + b * b), 0.5);
+                // var y = Math.Pow((a * a + b * b), 0.5);
                 float c = a * a + b * b;  //теорема пифагора
                 float y = (float)Math.Sqrt(c);
 

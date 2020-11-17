@@ -94,16 +94,13 @@ namespace ManipulatorRRT
             int D = 10;
             g.FillEllipse(Brushes.Red, pictureBox1.Width - pictureBox1.Width / 2 + Cgoal.X - D / 2, pictureBox1.Height - Cgoal.Y - D / 2, D, D); //рисуем целевую точку
             Pen blackPen = new Pen(Color.Black, 1);
+
             for (int i = 1; i < T.Count; i++)
             {
                 g.DrawLine(blackPen, pictureBox1.Width - pictureBox1.Width / 2 + T[i].E.p1.X, pictureBox1.Height - T[i].E.p1.Y, pictureBox1.Width - pictureBox1.Width / 2 + T[i].E.p2.X, pictureBox1.Height - T[i].E.p2.Y);
             }
-            //рисуем препятствия
-            //g.FillRectangle(Brushes.Gray, pictureBox1.Width - pictureBox1.Width / 2 + Rrt.obs[2].X, pictureBox1.Height -Rrt.obs[2].Y, 20, 90);
-            //g.FillRectangle(Brushes.Gray, pictureBox1.Width - pictureBox1.Width / 2 + Rrt.obs[6].X, pictureBox1.Height - Rrt.obs[6].Y, 60, 20);
-            //g.FillRectangle(Brushes.Gray, pictureBox1.Width - pictureBox1.Width / 2 + Rrt.obs[10].X, pictureBox1.Height - Rrt.obs[10].Y, 30, 70);
+                        
             pictureBox1.Invalidate();
-
         }
 
         private void updateRobotPose(GraphT start)// GraphT goal
@@ -131,7 +128,6 @@ namespace ManipulatorRRT
             g.DrawLine(blackPen, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob3, pictureBox1.Height - tempConf.Yglob3, pictureBox1.Width - pictureBox1.Width / 2 + tempConf.Xglob4, pictureBox1.Height - tempConf.Yglob4);
             paintObs();
             pictureBox1.Invalidate();
-
         }
 
         private void paintRobot()//отресовать все состояния робота

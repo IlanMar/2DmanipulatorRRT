@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿//Ilan Margolin 2019
+using System.Drawing;
 
 namespace ManipulatorRRT
 {
@@ -6,6 +7,7 @@ namespace ManipulatorRRT
     {
         public PointF p1, p2;    
     }
+
     public class ManipulatorConf//параметры  манипулятора  //VERTEX
     {
         public float q, q2,q3,q4,qP; //огол относительно пред идущего звена// qP это координата платформы по оси Х

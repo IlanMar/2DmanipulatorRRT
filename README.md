@@ -1,5 +1,16 @@
 # 2DmanipulatorRRT
-implementation of RRT for control a mobile manipulator in 2D
+[ENG]
+Launch ManipulatorRRT.exe
+
+ 1) Press the RRt_Start button to start the path search
+ 2) Press the Find Path button in order for the manipulator to start moving
+ 3) To clear the scene, click Clear All
+ 4) You can place obstacles with a left mouse click.
+
+This program is implemented in order to investigate the possibility of using the method of fast-growing random trees (RRT) in the tasks of planning the trajectory of movement by manipulative robots.
+
+
+[RUS]
 
 1) Запустить ManipulatorRRT.exe
 2) Нажать кнопку RRt_Start  для запуска поиска пути
